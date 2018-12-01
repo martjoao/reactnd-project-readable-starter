@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel } from 'react-bootstrap';
+import { Panel, Button, ButtonToolbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import { voteOnPost } from '../actions/postsActions';
@@ -12,9 +12,18 @@ import arrowDownIcon from '../assets/img/down-arrow.png';
 const Post = props => (
   <Panel>
     <Panel.Heading>
-      <Panel.Title componentClass="h2">
-        {props.post.title}
-      </Panel.Title>
+      <div className="post-header-content">
+        <div className="post-header-title-container">
+          <Panel.Title componentClass="h2">
+            {props.post.title}
+          </Panel.Title>
+        </div>
+        <ButtonToolbar>
+          <Button bsStyle="warning">Edit</Button>
+          <Button bsStyle="danger">Delete</Button>
+        </ButtonToolbar>
+
+      </div>
     </Panel.Heading>
     <Panel.Body>
       <div className="post-content">
@@ -40,7 +49,12 @@ const Post = props => (
         </div>
       </div>
     </Panel.Body>
-    <Panel.Footer>{`Posted by ${props.post.author}`}</Panel.Footer>
+    <Panel.Footer>
+      <div className="post-footer-content">
+        <div>{`Posted by ${props.post.author}`}</div>
+        <div>{`${props.post.commentCount} comment(s)`}</div>
+      </div>
+    </Panel.Footer>
   </Panel>
 );
 

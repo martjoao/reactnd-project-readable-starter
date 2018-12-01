@@ -2,6 +2,17 @@
   display: flex;
 }
 
+.post-header-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-header-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .post-body {
   flex: 1;
 }
@@ -11,4 +22,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.post-footer-content {
+  display: flex;
+  justify-content: space-between;
 }
