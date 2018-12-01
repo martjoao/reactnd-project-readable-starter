@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import Post from '../components/Post';
+
 import { getPosts } from '../actions/postsActions';
 
 class PostListPage extends React.PureComponent {
@@ -12,9 +14,8 @@ class PostListPage extends React.PureComponent {
   render() {
     return (
       <div className="App">
-        {
-          this.props.posts.map(post => <span>{post.id}</span>)
-
+        {this.props.posts.map(post => (
+          <Post key={post.id} post={post} />))
         }
       </div>
     );

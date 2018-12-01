@@ -19,8 +19,6 @@ class App extends React.PureComponent {
       <div className="App">
         <CategoriesBar categories={this.props.categories} />
         <div className="content">
-          {this.props.loading.toString()}
-          {this.props.error.toString()}
           <Switch>
             <Route path="/:category/:id" component={Pages.PostDetailsPage} />
             <Route path="/:category" component={Pages.CategoryPage} />
@@ -34,8 +32,8 @@ class App extends React.PureComponent {
 
 App.propTypes = {
   getCategories: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.bool.isRequired,
+  // loading: PropTypes.bool.isRequired,
+  // error: PropTypes.bool.isRequired,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
