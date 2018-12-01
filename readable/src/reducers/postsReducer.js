@@ -3,6 +3,7 @@ import * as ActionTypes from '../actions/types';
 const INITIAL_STATE = {
   posts: {},
   postOrder: [],
+  voting: false,
   loading: false,
   error: false,
 };
@@ -24,6 +25,25 @@ export default (state = INITIAL_STATE, action) => {
           accumulator[current.id] = current;
           return accumulator;
         }, {}),
+      };
+
+    case ActionTypes.POSTS_VOTE:
+      return {
+        ...state,
+        voting: true,
+      };
+
+    case ActionTypes.POSTS_VOTE_FINISHED:
+      if (!payload.post) {
+        return { ...state, voting: false };
+      }
+      return {
+        ...state,
+        voting: false,
+        posts: {
+          ...state.posts,
+          [payload.post.id]: payload.post,
+        },
       };
 
     default:

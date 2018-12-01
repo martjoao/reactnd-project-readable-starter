@@ -7,11 +7,21 @@ export const getPosts = () => async (dispatch) => {
     dispatch(action(ActionTypes.POSTS_GET));
     const response = await API.getPosts();
     const { data } = response;
-    console.log(data);
     dispatch(successAction(ActionTypes.POSTS_GET_FINISHED, { posts: data }));
   } catch (error) {
-    console.log(error);
     dispatch(errorAction(ActionTypes.POSTS_GET_FINISHED));
+  }
+};
+
+export const voteOnPost = (postId, upVote = true) => async (dispatch) => {
+  try {
+    const option = upVote ? 'upVote' : 'downVote';
+    dispatch(action(ActionTypes.POSTS_VOTE, { postId }));
+    const response = await API.votePost(postId, option);
+    const post = response.data;
+    dispatch(successAction(ActionTypes.POSTS_VOTE_FINISHED, { post }));
+  } catch (error) {
+    dispatch(errorAction(ActionTypes.POSTS_VOTE_FINISHED));
   }
 };
 

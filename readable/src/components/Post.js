@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel } from 'react-bootstrap';
+import { connect } from 'react-redux';
+
+import { voteOnPost } from '../actions/postsActions';
 
 import '../stylesheets/Post.css';
 import arrowUpIcon from '../assets/img/up-arrow.png';
 import arrowDownIcon from '../assets/img/down-arrow.png';
-
-const upvotePost = postId => console.log(postId);
 
 const Post = props => (
   <Panel>
@@ -21,12 +22,18 @@ const Post = props => (
           {props.post.body}
         </div>
         <div className="post-vote-controls">
-          <button type="button" onClick={() => upvotePost(props.post.id)}>
+          <button
+            type="button"
+            onClick={() => props.voteOnPost(props.post.id)}
+          >
             <img src={arrowUpIcon} width="16" alt="upvote" />
           </button>
           <span>{props.post.voteScore}</span>
 
-          <button type="button" onClick={() => upvotePost(props.post.id)}>
+          <button
+            type="button"
+            onClick={() => props.voteOnPost(props.post.id, false)}
+          >
             <img src={arrowDownIcon} width="16" alt="downvote" />
           </button>
 
@@ -48,9 +55,14 @@ Post.propTypes = {
     timestamp: PropTypes.number,
     voteScore: PropTypes.number,
   }).isRequired,
+  voteOnPost: PropTypes.func.isRequired,
 };
 
 Post.defaultProps = {
 };
 
-export default Post;
+const mapDispatchToProps = {
+  voteOnPost,
+};
+
+export default connect(null, mapDispatchToProps)(Post);
