@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Panel } from 'react-bootstrap';
 
 import '../stylesheets/Post.css';
-import arrowUpIcon from '../assets/img/up-arrow.png'
-import arrowDownIcon from '../assets/img/down-arrow.png'
+import arrowUpIcon from '../assets/img/up-arrow.png';
+import arrowDownIcon from '../assets/img/down-arrow.png';
 
 const upvotePost = postId => console.log(postId);
 
