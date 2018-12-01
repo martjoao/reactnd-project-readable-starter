@@ -1,0 +1,14 @@
+.post-content {
+  display: flex;
+}
+
+.post-body {
+  flex: 1;
+}
+
+.post-vote-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
