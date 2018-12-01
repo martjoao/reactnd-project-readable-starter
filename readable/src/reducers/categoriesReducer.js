@@ -18,7 +18,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: payload.error,
-        categories: payload.categories.map(cat => cat.name),
+        categories: payload.categories ? payload.categories.map(cat => cat.name) : [],
       };
 
     default:

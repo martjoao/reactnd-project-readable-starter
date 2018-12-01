@@ -1,29 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as Pages from './pages';
 import { getCategories } from './actions/categoriesActions';
 
-import './App.css';
+import './stylesheets/App.css';
+import CategoriesBar from './components/CategoriesBar';
 
 class App extends React.PureComponent {
   componentDidMount() {
+    console.log('doing it');
     this.props.getCategories();
   }
 
   render() {
     return (
       <div className="App">
-        {this.props.loading.toString()}
-        {this.props.error.toString()}
-        {this.props.categories}
-        <Switch>
-          <Route exact path="/" component={Pages.DefaultPage} />
-          <Route path="/:category/:id" component={Pages.PostDetailsPage} />
-          <Route path="/:category" component={Pages.CategoryPage} />
-        </Switch>
+        <CategoriesBar categories={this.props.categories} />
+        <div className="content">
+          {this.props.loading.toString()}
+          {this.props.error.toString()}
+          <Switch>
+            <Route path="/:category/:id" component={Pages.PostDetailsPage} />
+            <Route path="/:category" component={Pages.CategoryPage} />
+            <Route exact path="/" component={Pages.DefaultPage} />
+          </Switch>
+        </div>
       </div>
     );
   }
@@ -45,4 +49,4 @@ const mapDispatchToProps = {
   getCategories,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
