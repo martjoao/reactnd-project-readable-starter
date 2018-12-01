@@ -14,7 +14,7 @@ const CategoriesBar = props => (
     </Navbar.Header>
     <Nav>
       {props.categories.map(category => (
-        <LinkContainer to={`/${category}`}>
+        <LinkContainer key={category} to={`/${category}`}>
           <NavItem>{category}</NavItem>
         </LinkContainer>
       ))}
@@ -23,7 +23,7 @@ const CategoriesBar = props => (
 );
 
 CategoriesBar.propTypes = {
-  categories: PropTypes.arrayOf(),
+  categories: PropTypes.arrayOf(PropTypes.string),
 };
 
 CategoriesBar.defaultProps = {

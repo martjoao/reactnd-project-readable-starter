@@ -11,7 +11,6 @@ import CategoriesBar from './components/CategoriesBar';
 
 class App extends React.PureComponent {
   componentDidMount() {
-    console.log('doing it');
     this.props.getCategories();
   }
 
@@ -25,7 +24,7 @@ class App extends React.PureComponent {
           <Switch>
             <Route path="/:category/:id" component={Pages.PostDetailsPage} />
             <Route path="/:category" component={Pages.CategoryPage} />
-            <Route exact path="/" component={Pages.DefaultPage} />
+            <Route exact path="/" component={Pages.PostListPage} />
           </Switch>
         </div>
       </div>
