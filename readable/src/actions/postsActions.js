@@ -34,3 +34,7 @@ export const deletePost = postId => async (dispatch) => {
     dispatch(errorAction(ActionTypes.POSTS_DELETE_FINISHED));
   }
 };
+
+export const setSortOrder = (sortBy, sortOrder) => action(
+  ActionTypes.POSTS_SET_SORT_ORDER, { sortBy, sortOrder },
+);

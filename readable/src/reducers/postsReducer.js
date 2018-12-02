@@ -7,6 +7,8 @@ const INITIAL_STATE = {
   deleting: false,
   loading: false,
   error: false,
+  sortBy: 'voteScore',
+  sortOrder: 'desc',
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -64,6 +66,13 @@ export default (state = INITIAL_STATE, action) => {
           .postOrder.filter(item => item !== payload.postId);
       }
       return newState;
+
+    case ActionTypes.POSTS_SET_SORT_ORDER:
+      return {
+        ...state,
+        sortBy: payload.sortBy || state.sortBy,
+        sortOrder: payload.sortOrder || state.sortOrder,
+      };
 
     default:
       return state;
