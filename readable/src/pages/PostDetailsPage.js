@@ -9,6 +9,8 @@ import { compareDesc } from '../utils/comparators';
 import Post from '../components/Post';
 import Comment from '../components/Comment';
 
+import '../stylesheets/PostDetailsPage.css';
+
 class PostDetailsPage extends React.PureComponent {
   componentDidMount() {
     if (!this.props.post) {
@@ -28,9 +30,12 @@ class PostDetailsPage extends React.PureComponent {
     return (
       <div className="App">
         {this.props.post && <Post post={this.props.post} full />}
-        {this.props.comments.map(comment => (
-          <Comment key={comment.id} comment={comment} />))
-        }
+        <div className="post-details-comments-container">
+          {this.props.comments.map(comment => (
+            <Comment key={comment.id} comment={comment} />))
+          }
+
+        </div>
       </div>
     );
   }

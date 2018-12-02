@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 
 import { voteOnPost, deletePost } from '../actions/postsActions';
 
-import '../stylesheets/Post.css';
+import '../stylesheets/InfoCard.css';
 import arrowUpIcon from '../assets/img/up-arrow.png';
 import arrowDownIcon from '../assets/img/down-arrow.png';
 
 const Post = props => (
-  <Panel>
+  <Panel bsStyle="primary">
     <Panel.Heading>
-      <div className="post-header-content">
-        <div className="post-header-title-container">
+      <div className="infocard-header-content">
+        <div className="infocard-header-title-container">
           <Panel.Title componentClass="h2">
             {props.post.title}
           </Panel.Title>
@@ -32,8 +32,8 @@ const Post = props => (
       </div>
     </Panel.Heading>
     <Panel.Body>
-      <div className="post-content">
-        <div className="post-body">
+      <div className="infocard-content">
+        <div className="infocard-body">
           {props.full ? props.post.body
             : (
               <div>
@@ -46,7 +46,7 @@ const Post = props => (
             )
           }
         </div>
-        <div className="post-vote-controls">
+        <div className="infocard-vote-controls">
           <button
             type="button"
             onClick={() => props.voteOnPost(props.post.id)}
@@ -66,7 +66,7 @@ const Post = props => (
       </div>
     </Panel.Body>
     <Panel.Footer>
-      <div className="post-footer-content">
+      <div className="infocard-footer-content">
         <div>{`Posted by ${props.post.author}`}</div>
         <div>{`${props.post.commentCount} comment(s)`}</div>
       </div>
