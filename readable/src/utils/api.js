@@ -52,7 +52,6 @@ export const addComment = (comment) => {
     id: generateId(22),
     timestamp: +new Date(),
   };
-  console.log(apiComment);
   return axios.post('/comments', apiComment);
 };
 
@@ -62,8 +61,14 @@ export const getComment = commentId => (
 export const voteComment = (commentId, option) => (
   axios.post(`/comments/${commentId}`, { option }));
 
-export const editComment = (commentId, commentDetails) => (
-  axios.put(`/comments/${commentId}`, commentDetails));
+export const editComment = (commentId, commentDetails) => {
+  const apiComment = {
+    ...commentDetails,
+    timestamp: +new Date(),
+  };
+  return axios.put(`/comments/${commentId}`, apiComment);
+};
+
 
 export const deleteComment = commentId => (
   axios.delete(`/comments/${commentId}`));

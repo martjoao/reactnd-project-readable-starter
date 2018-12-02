@@ -4,6 +4,7 @@ import { Panel, Button, ButtonToolbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import { voteOnComment, deleteComment } from '../actions/commentsActions';
+import { setCommentFormState } from '../actions/appStateActions';
 
 import '../stylesheets/InfoCard.css';
 import arrowUpIcon from '../assets/img/up-arrow.png';
@@ -17,7 +18,12 @@ const Comment = props => (
           <div>{`Posted by ${props.comment.author}`}</div>
         </div>
         <ButtonToolbar>
-          <Button bsStyle="warning">Edit</Button>
+          <Button
+            bsStyle="warning"
+            onClick={() => props.setCommentFormState(true, null, props.comment.id)}
+          >
+            Edit
+          </Button>
           <Button
             bsStyle="danger"
             onClick={() => props.deleteComment(props.comment.id)}
@@ -64,11 +70,13 @@ Comment.propTypes = {
   }).isRequired,
   voteOnComment: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
+  setCommentFormState: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   voteOnComment,
   deleteComment,
+  setCommentFormState,
 };
 
 export default connect(null, mapDispatchToProps)(Comment);

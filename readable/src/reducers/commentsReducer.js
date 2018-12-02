@@ -6,6 +6,8 @@ const INITIAL_STATE = {
   deleting: false,
   loading: false,
   error: false,
+  creating: false,
+  editing: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -64,7 +66,11 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.COMMENTS_CREATE:
       return { ...state, creating: true };
 
+    case ActionTypes.COMMENTS_EDIT:
+      return { ...state, editing: true };
+
     case ActionTypes.COMMENTS_CREATE_FINISHED:
+    case ActionTypes.COMMENTS_EDIT_FINISHED:
       return {
         ...state,
         comments: {

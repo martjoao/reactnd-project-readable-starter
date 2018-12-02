@@ -11,7 +11,7 @@ import {
 import FormField from './FormField';
 
 import { setCommentFormState } from '../actions/appStateActions';
-import { createComment } from '../actions/commentsActions';
+import { createComment, updateComment } from '../actions/commentsActions';
 
 const INITIAL_FORM_STATE = {
   body: '',
@@ -24,6 +24,17 @@ class CommentForm extends React.PureComponent {
     this.state = {
       form: { ...INITIAL_FORM_STATE },
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.show && nextProps.show && nextProps.editingComment) {
+      this.setState({
+        form: {
+          body: nextProps.editingComment.body,
+          author: nextProps.editingComment.author,
+        },
+      });
+    }
   }
 
   close = () => {
@@ -49,6 +60,14 @@ class CommentForm extends React.PureComponent {
       body: this.state.form.body,
       author: this.state.form.author,
       parentId: this.props.commentParent,
+    });
+    this.close();
+  };
+
+  editComment = () => {
+    this.props.updateComment(this.props.editingComment.id, {
+      body: this.state.form.body,
+      author: this.state.form.author,
     });
     this.close();
   };
@@ -80,7 +99,12 @@ class CommentForm extends React.PureComponent {
 
         <Modal.Footer>
           <ButtonToolbar>
-            <Button bsStyle="primary" onClick={this.createComment}>Create</Button>
+            <Button
+              bsStyle="primary"
+              onClick={this.props.editingComment ? this.editComment : this.createComment}
+            >
+              {this.props.editingComment ? 'Edit Comment' : 'Add Comment'}
+            </Button>
             <Button onClick={this.close}>Close</Button>
           </ButtonToolbar>
         </Modal.Footer>
@@ -93,22 +117,33 @@ CommentForm.propTypes = {
   show: PropTypes.bool,
   setCommentFormState: PropTypes.func.isRequired,
   createComment: PropTypes.func.isRequired,
+  updateComment: PropTypes.func.isRequired,
   commentParent: PropTypes.string,
+  editingComment: PropTypes.shape({
+    id: PropTypes.string,
+    body: PropTypes.string,
+    author: PropTypes.string,
+  }),
 };
 
 CommentForm.defaultProps = {
   show: true,
   commentParent: null,
+  editingComment: null,
 };
 
 const mapStateToProps = (state) => {
-  const { commentParent } = state.app;
-  return { commentParent };
+  const { commentParent, editingComment } = state.app;
+  const { comments } = state.comments;
+
+  const comment = comments[editingComment];
+  return { commentParent, editingComment: comment };
 };
 
 const mapDispatchToProps = {
   setCommentFormState,
   createComment,
+  updateComment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentForm);
