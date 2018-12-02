@@ -8,6 +8,7 @@ import { getCategories } from './actions/categoriesActions';
 
 import './stylesheets/App.css';
 import CategoriesBar from './components/CategoriesBar';
+import CommentForm from './components/CommentForm';
 
 class App extends React.PureComponent {
   componentDidMount() {
@@ -25,6 +26,7 @@ class App extends React.PureComponent {
             <Route exact path="/" component={Pages.PostListPage} />
           </Switch>
         </div>
+        <CommentForm show={this.props.showCommentForm} />
       </div>
     );
   }
@@ -35,11 +37,20 @@ App.propTypes = {
   // loading: PropTypes.bool.isRequired,
   // error: PropTypes.bool.isRequired,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  showCommentForm: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const { loading, error, categories } = state.categories;
-  return { loading, error, categories };
+  const { showPostForm, showCommentForm } = state.app;
+
+  return {
+    loading,
+    error,
+    categories,
+    showPostForm,
+    showCommentForm,
+  };
 };
 
 const mapDispatchToProps = {

@@ -13,5 +13,3 @@ export const getCategories = () => async (dispatch) => {
     dispatch(errorAction(ActionTypes.CATEGORIES_GET_FINISHED));
   }
 };
-
-export const getPost = 2;

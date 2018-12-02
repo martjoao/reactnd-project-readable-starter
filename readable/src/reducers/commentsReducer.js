@@ -61,6 +61,19 @@ export default (state = INITIAL_STATE, action) => {
       }
       return newState;
 
+    case ActionTypes.COMMENTS_CREATE:
+      return { ...state, creating: true };
+
+    case ActionTypes.COMMENTS_CREATE_FINISHED:
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          error: payload.error,
+          [payload.comment.id]: payload.comment,
+        },
+      };
+
     default:
       return state;
   }

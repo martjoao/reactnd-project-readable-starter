@@ -1,3 +1,9 @@
 .post-details-comments-container {
   padding: 0 0 0 64px;
 }
+
+.post-details-comments-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}

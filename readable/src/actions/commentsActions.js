@@ -34,3 +34,16 @@ export const deleteComment = commentId => async (dispatch) => {
     dispatch(errorAction(ActionTypes.COMMENTS_DELETE_FINISHED));
   }
 };
+
+export const createComment = comment => async (dispatch) => {
+  try {
+    dispatch(action(ActionTypes.COMMENTS_CREATE));
+    const response = await API.addComment(comment);
+    const { data } = response;
+    console.log(response);
+    console.log(data);
+    dispatch(successAction(ActionTypes.COMMENTS_CREATE_FINISHED, { comment: data }));
+  } catch (error) {
+    dispatch(errorAction(ActionTypes.COMMENTS_GET_FINISHED));
+  }
+};

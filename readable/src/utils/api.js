@@ -1,4 +1,5 @@
 import AxiosLib from 'axios';
+import { generateId } from './idGenerator';
 
 const SERVER_URL = 'http://localhost:3001';
 const AUTHORIZATION_TOKEN = 'REACTND_RANDOM_AUTH_TOKEN_HERE';
@@ -45,8 +46,15 @@ export const deletePost = postId => (
 export const getPostComments = postId => (
   axios.get(`/posts/${postId}/comments`));
 
-export const addComment = comment => (
-  axios.post('/comments', comment));
+export const addComment = (comment) => {
+  const apiComment = {
+    ...comment,
+    id: generateId(22),
+    timestamp: +new Date(),
+  };
+  console.log(apiComment);
+  return axios.post('/comments', apiComment);
+};
 
 export const getComment = commentId => (
   axios.get(`/comments/${commentId}`));

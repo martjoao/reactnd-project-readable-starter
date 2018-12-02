@@ -68,7 +68,7 @@ const Post = props => (
     <Panel.Footer>
       <div className="infocard-footer-content">
         <div>{`Posted by ${props.post.author}`}</div>
-        <div>{`${props.post.commentCount} comment(s)`}</div>
+        {!props.full && <div>{`${props.post.commentCount} comment(s)`}</div>}
       </div>
     </Panel.Footer>
   </Panel>

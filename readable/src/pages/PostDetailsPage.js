@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { getPosts } from '../actions/postsActions';
-import { getComments } from '../actions/commentsActions';
-import { compareDesc } from '../utils/comparators';
+import { Button } from 'react-bootstrap';
 
 import Post from '../components/Post';
 import Comment from '../components/Comment';
+
+import { setCommentFormState } from '../actions/appStateActions';
+import { getPosts } from '../actions/postsActions';
+import { getComments } from '../actions/commentsActions';
+import { compareDesc } from '../utils/comparators';
 
 import '../stylesheets/PostDetailsPage.css';
 
@@ -26,15 +28,22 @@ class PostDetailsPage extends React.PureComponent {
     }
   }
 
+  showCreateCommentModal = () => {
+    this.props.setCommentFormState(true, this.props.post.id);
+  }
+
   render() {
     return (
       <div className="App">
         {this.props.post && <Post post={this.props.post} full />}
         <div className="post-details-comments-container">
+          <div className="post-details-comments-header">
+            <h4>{`Comments (${this.props.comments && this.props.comments.length})`}</h4>
+            <Button onClick={this.showCreateCommentModal}>Add Comment</Button>
+          </div>
           {this.props.comments.map(comment => (
             <Comment key={comment.id} comment={comment} />))
           }
-
         </div>
       </div>
     );
@@ -44,11 +53,13 @@ class PostDetailsPage extends React.PureComponent {
 PostDetailsPage.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.string,
+    commentCount: PropTypes.number,
   }),
   comments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 
   getComments: PropTypes.func.isRequired,
   getPosts: PropTypes.func.isRequired,
+  setCommentFormState: PropTypes.func.isRequired,
 };
 
 PostDetailsPage.defaultProps = {
@@ -73,6 +84,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = {
   getComments,
   getPosts,
+  setCommentFormState,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetailsPage);
