@@ -21,7 +21,7 @@ class App extends React.PureComponent {
     return (
       <div className="App">
         <CategoriesBar categories={this.props.categories} />
-        <div className="content">
+        <div className="content container">
           <Switch>
             <Route path="/:category/:id" component={Pages.PostDetailsPage} />
             <Route path="/:category" component={Pages.PostListPage} />

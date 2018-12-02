@@ -39,7 +39,7 @@ class PostDetailsPage extends React.PureComponent {
         <div className="post-details-comments-container">
           <div className="post-details-comments-header">
             <h4>{`Comments (${this.props.comments && this.props.comments.length})`}</h4>
-            <Button onClick={this.showCreateCommentModal}>Add Comment</Button>
+            <Button bsStyle="primary" onClick={this.showCreateCommentModal}>Add Comment</Button>
           </div>
           {this.props.comments.map(comment => (
             <Comment key={comment.id} comment={comment} />))
