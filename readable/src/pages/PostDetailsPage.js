@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
 import Post from '../components/Post';
 import Comment from '../components/Comment';
@@ -14,9 +15,15 @@ import { compareDesc } from '../utils/comparators';
 import '../stylesheets/PostDetailsPage.css';
 
 class PostDetailsPage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.shouldRedirect = false;
+  }
+
   componentDidMount() {
     if (!this.props.post) {
       this.props.getPosts();
+      this.shouldRedirect = true;
     } else {
       this.props.getComments(this.props.post.id);
     }
@@ -33,6 +40,13 @@ class PostDetailsPage extends React.PureComponent {
   }
 
   render() {
+    // If post is not found, a post is not loading and shouldRedirect flag is set, redirect
+    if (!this.props.post && !this.props.loading && this.shouldRedirect) {
+      return (
+        <Redirect to="/notfound" />
+      );
+    }
+
     return (
       <div className="App">
         {this.props.post && <Post post={this.props.post} full />}
@@ -56,10 +70,10 @@ PostDetailsPage.propTypes = {
     commentCount: PropTypes.number,
   }),
   comments: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-
   getComments: PropTypes.func.isRequired,
   getPosts: PropTypes.func.isRequired,
   setCommentFormState: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 PostDetailsPage.defaultProps = {
@@ -68,7 +82,7 @@ PostDetailsPage.defaultProps = {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { posts } = state.posts;
+  const { posts, loading } = state.posts;
   const { id } = ownProps.match.params;
   const { comments } = state.comments;
 
@@ -78,7 +92,7 @@ const mapStateToProps = (state, ownProps) => {
     .filter(comment => comment.parentId === post.id)
     .sort((a, b) => compareDesc(a.timestamp, b.timestamp));
 
-  return { post, comments: commentsArray };
+  return { post, comments: commentsArray, loading };
 };
 
 const mapDispatchToProps = {

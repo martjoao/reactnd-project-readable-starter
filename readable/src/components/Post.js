@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Button, ButtonToolbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { voteOnPost, deletePost } from '../actions/postsActions';
 import { setPostFormState } from '../actions/appStateActions';
@@ -29,7 +29,10 @@ const Post = props => (
           </Button>
           <Button
             bsStyle="danger"
-            onClick={() => props.deletePost(props.post.id)}
+            onClick={() => {
+              props.deletePost(props.post.id);
+              props.history.push('/');
+            }}
           >
             Delete
           </Button>
@@ -95,6 +98,9 @@ Post.propTypes = {
   deletePost: PropTypes.func.isRequired,
   setPostFormState: PropTypes.func.isRequired,
   full: PropTypes.bool,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 Post.defaultProps = {
@@ -107,4 +113,4 @@ const mapDispatchToProps = {
   setPostFormState,
 };
 
-export default connect(null, mapDispatchToProps)(Post);
+export default withRouter(connect(null, mapDispatchToProps)(Post));

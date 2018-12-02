@@ -23,6 +23,7 @@ class App extends React.PureComponent {
         <CategoriesBar categories={this.props.categories} />
         <div className="content container">
           <Switch>
+            <Route exact path="/notfound" component={Pages.NotFoundPage} />
             <Route path="/:category/:id" component={Pages.PostDetailsPage} />
             <Route path="/:category" component={Pages.PostListPage} />
             <Route exact path="/" component={Pages.PostListPage} />
