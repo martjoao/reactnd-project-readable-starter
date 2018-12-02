@@ -21,7 +21,7 @@ class App extends React.PureComponent {
         <div className="content">
           <Switch>
             <Route path="/:category/:id" component={Pages.PostDetailsPage} />
-            <Route path="/:category" component={Pages.CategoryPage} />
+            <Route path="/:category" component={Pages.PostListPage} />
             <Route exact path="/" component={Pages.PostListPage} />
           </Switch>
         </div>

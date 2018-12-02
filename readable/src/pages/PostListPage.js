@@ -12,6 +12,7 @@ class PostListPage extends React.PureComponent {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="App">
         {this.props.posts.map(post => (
@@ -27,9 +28,15 @@ PostListPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const { posts, postOrder } = state.posts;
-  const pagePosts = postOrder.map(id => posts[id]);
+  let pagePosts = postOrder.map(id => posts[id]);
+
+  const { category } = ownProps.match.params;
+  if (category) {
+    pagePosts = pagePosts.filter(post => post.category === category);
+  }
+
 
   return { posts: pagePosts };
 };
