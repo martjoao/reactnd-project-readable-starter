@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Button, ButtonToolbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { voteOnPost, deletePost } from '../actions/postsActions';
 
@@ -19,6 +20,12 @@ const Post = props => (
           </Panel.Title>
         </div>
         <ButtonToolbar>
+          <Button
+            bsStyle="primary"
+            onClick={() => props.history.push(`/${props.post.category}/${props.post.id}`)}
+          >
+            View More
+          </Button>
           <Button bsStyle="warning">Edit</Button>
           <Button
             bsStyle="danger"
@@ -76,6 +83,7 @@ Post.propTypes = {
   }).isRequired,
   voteOnPost: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
+  history: PropTypes.shape().isRequired,
 };
 
 Post.defaultProps = {
@@ -86,4 +94,4 @@ const mapDispatchToProps = {
   deletePost,
 };
 
-export default connect(null, mapDispatchToProps)(Post);
+export default withRouter(connect(null, mapDispatchToProps)(Post));
