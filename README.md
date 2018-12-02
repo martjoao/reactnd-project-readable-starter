@@ -1,22 +1,39 @@
-# Readable API Server
+This project was developed as the second programming assignment for the Udacity React Nanodegree program.
 
-This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+----
 
-This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
+# Readable
 
-## Start Developing
+Post manager, such as reddit, that handles posts and comments. This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
-To get started developing right away:
+Some design decisions on this projects were made based on the Udacity's requirements, such as keeping most of the app's state inside the reducers.
 
-* Install and start the API server
-    - `cd api-server`
-    - `npm install`
-    - `node server`
-* In another terminal window, use Create React App to scaffold out the front-end
-    - `create-react-app frontend`
-    - `cd frontend`
-    - `npm start`
+## Installation
 
-## API Server
+The app consist of a frontend and a backend (provided by Udacity)
+
+To install the backend, run the code:
+
+```
+$ cd api-server
+$ npm install
+```
+
+To install the frontend, run the code:
+
+```
+$ cd readable
+$ npm install
+```
+
+## Development mode
+
+Both the frontend and the backend can be started with the following command. Make sure the backend is running before starting the frontend.
+
+```
+$ npm start
+```
+
+## Backend Server
 
 Information about the API server and how to use it can be found in its [README file](api-server/README.md).
