@@ -25,4 +25,12 @@ export const voteOnPost = (postId, upVote = true) => async (dispatch) => {
   }
 };
 
-export const getPost = 2;
+export const deletePost = postId => async (dispatch) => {
+  try {
+    dispatch(action(ActionTypes.POSTS_DELETE, { postId }));
+    await API.deletePost(postId);
+    dispatch(successAction(ActionTypes.POSTS_DELETE_FINISHED, { postId }));
+  } catch (error) {
+    dispatch(errorAction(ActionTypes.POSTS_DELETE_FINISHED));
+  }
+};

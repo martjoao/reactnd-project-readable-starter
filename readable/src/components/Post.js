@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Panel, Button, ButtonToolbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { voteOnPost } from '../actions/postsActions';
+import { voteOnPost, deletePost } from '../actions/postsActions';
 
 import '../stylesheets/Post.css';
 import arrowUpIcon from '../assets/img/up-arrow.png';
@@ -20,7 +20,12 @@ const Post = props => (
         </div>
         <ButtonToolbar>
           <Button bsStyle="warning">Edit</Button>
-          <Button bsStyle="danger">Delete</Button>
+          <Button
+            bsStyle="danger"
+            onClick={() => props.deletePost(props.post.id)}
+          >
+            Delete
+          </Button>
         </ButtonToolbar>
 
       </div>
@@ -70,6 +75,7 @@ Post.propTypes = {
     voteScore: PropTypes.number,
   }).isRequired,
   voteOnPost: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 Post.defaultProps = {
@@ -77,6 +83,7 @@ Post.defaultProps = {
 
 const mapDispatchToProps = {
   voteOnPost,
+  deletePost,
 };
 
 export default connect(null, mapDispatchToProps)(Post);

@@ -4,12 +4,16 @@ const INITIAL_STATE = {
   posts: {},
   postOrder: [],
   voting: false,
+  deleting: false,
   loading: false,
   error: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
+
+  // Auxiliary variable for some actions
+  let newState = state;
 
   switch (type) {
     case ActionTypes.POSTS_GET:
@@ -45,6 +49,21 @@ export default (state = INITIAL_STATE, action) => {
           [payload.post.id]: payload.post,
         },
       };
+
+    case ActionTypes.POSTS_DELETE:
+      return {
+        ...state,
+        deleting: true,
+      };
+
+    case ActionTypes.POSTS_DELETE_FINISHED:
+      if (!payload.error) {
+        newState = { ...state };
+        delete newState.posts[payload.postId];
+        newState.postOrder = newState
+          .postOrder.filter(item => item !== payload.postId);
+      }
+      return newState;
 
     default:
       return state;
