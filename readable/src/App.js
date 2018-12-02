@@ -4,11 +4,13 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as Pages from './pages';
+import CategoriesBar from './components/CategoriesBar';
+import CommentForm from './components/CommentForm';
+import PostForm from './components/PostForm';
+
 import { getCategories } from './actions/categoriesActions';
 
 import './stylesheets/App.css';
-import CategoriesBar from './components/CategoriesBar';
-import CommentForm from './components/CommentForm';
 
 class App extends React.PureComponent {
   componentDidMount() {
@@ -27,6 +29,7 @@ class App extends React.PureComponent {
           </Switch>
         </div>
         <CommentForm show={this.props.showCommentForm} />
+        <PostForm show={this.props.showPostForm} />
       </div>
     );
   }
@@ -34,19 +37,16 @@ class App extends React.PureComponent {
 
 App.propTypes = {
   getCategories: PropTypes.func.isRequired,
-  // loading: PropTypes.bool.isRequired,
-  // error: PropTypes.bool.isRequired,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   showCommentForm: PropTypes.bool.isRequired,
+  showPostForm: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const { loading, error, categories } = state.categories;
+  const { categories } = state.categories;
   const { showPostForm, showCommentForm } = state.app;
 
   return {
-    loading,
-    error,
     categories,
     showPostForm,
     showCommentForm,

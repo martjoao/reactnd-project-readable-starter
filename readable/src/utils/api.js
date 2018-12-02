@@ -28,8 +28,14 @@ export const getPosts = (category) => {
   return axios.get('/posts');
 };
 
-export const addPost = post => (
-  axios.post('/posts', post));
+export const addPost = (post) => {
+  const apiPost = {
+    ...post,
+    id: generateId(22),
+    timestamp: +new Date(),
+  };
+  return axios.post('/posts', apiPost);
+};
 
 export const getPost = postId => (
   axios.get(`/posts/${postId}`));
@@ -37,8 +43,13 @@ export const getPost = postId => (
 export const votePost = (postId, option) => (
   axios.post(`/posts/${postId}`, { option }));
 
-export const editPost = (postId, postDetails) => (
-  axios.put(`/posts/${postId}`, postDetails));
+export const editPost = (postId, postDetails) => {
+  const apiPost = {
+    ...postDetails,
+    timestamp: +new Date(),
+  };
+  return axios.put(`/posts/${postId}`, apiPost);
+};
 
 export const deletePost = postId => (
   axios.delete(`/posts/${postId}`));

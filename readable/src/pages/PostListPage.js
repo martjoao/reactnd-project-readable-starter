@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { DropdownButton, MenuItem, Button } from 'react-bootstrap';
 
 import Post from '../components/Post';
 
 import { getPosts, setSortOrder } from '../actions/postsActions';
+import { setPostFormState } from '../actions/appStateActions';
 import { compareAsc, compareDesc } from '../utils/comparators';
 
 import '../stylesheets/PostListPage.css';
@@ -23,6 +24,10 @@ const SORT_ORDER_OPTIONS = ['asc', 'desc'];
 class PostListPage extends React.PureComponent {
   componentDidMount() {
     this.props.getPosts();
+  }
+
+  showCreatePostModal = () => {
+    this.props.setPostFormState(true);
   }
 
   renderSortByDropdownButton() {
@@ -65,12 +70,13 @@ class PostListPage extends React.PureComponent {
     );
   }
 
-
   render() {
     return (
       <div className="App">
         <div className="post-list-controls">
-          <div><br /></div>
+          <div>
+            <Button bsStyle="primary" onClick={this.showCreatePostModal}>Add Post</Button>
+          </div>
           <div className="post-list-sorter-container">
             <div>
               {this.renderSortByDropdownButton()}
@@ -92,6 +98,7 @@ class PostListPage extends React.PureComponent {
 PostListPage.propTypes = {
   getPosts: PropTypes.func.isRequired,
   setSortOrder: PropTypes.func.isRequired,
+  setPostFormState: PropTypes.func.isRequired,
   posts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   sortBy: PropTypes.string.isRequired,
   sortOrder: PropTypes.string.isRequired,
@@ -100,12 +107,11 @@ PostListPage.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   const {
     posts,
-    postOrder,
     sortBy,
     sortOrder,
   } = state.posts;
 
-  let pagePosts = postOrder.map(id => posts[id]);
+  let pagePosts = Object.keys(posts).map(id => posts[id]);
 
   const { category } = ownProps.match.params;
   if (category) {
@@ -125,6 +131,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = {
   getPosts,
   setSortOrder,
+  setPostFormState,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostListPage);

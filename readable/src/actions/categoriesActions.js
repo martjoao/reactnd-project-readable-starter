@@ -9,7 +9,6 @@ export const getCategories = () => async (dispatch) => {
     const data = response.data.categories;
     dispatch(successAction(ActionTypes.CATEGORIES_GET_FINISHED, { categories: data }));
   } catch (error) {
-    console.log(error);
     dispatch(errorAction(ActionTypes.CATEGORIES_GET_FINISHED));
   }
 };

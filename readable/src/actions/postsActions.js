@@ -38,3 +38,25 @@ export const deletePost = postId => async (dispatch) => {
 export const setSortOrder = (sortBy, sortOrder) => action(
   ActionTypes.POSTS_SET_SORT_ORDER, { sortBy, sortOrder },
 );
+
+export const createPost = post => async (dispatch) => {
+  try {
+    dispatch(action(ActionTypes.POSTS_CREATE));
+    const response = await API.addPost(post);
+    const { data } = response;
+    dispatch(successAction(ActionTypes.POSTS_CREATE_FINISHED, { post: data }));
+  } catch (error) {
+    dispatch(errorAction(ActionTypes.POSTS_CREATE_FINISHED));
+  }
+};
+
+export const updatePost = (postId, post) => async (dispatch) => {
+  try {
+    dispatch(action(ActionTypes.POSTS_EDIT));
+    const response = await API.editPost(postId, post);
+    const { data } = response;
+    dispatch(successAction(ActionTypes.POSTS_EDIT_FINISHED, { post: data }));
+  } catch (error) {
+    dispatch(errorAction(ActionTypes.POSTS_EDIT_FINISHED));
+  }
+};

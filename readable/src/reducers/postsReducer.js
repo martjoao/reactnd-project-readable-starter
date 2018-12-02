@@ -2,12 +2,13 @@ import * as ActionTypes from '../actions/types';
 
 const INITIAL_STATE = {
   posts: {},
-  postOrder: [],
   voting: false,
   deleting: false,
   loading: false,
+  creating: false,
+  editing: false,
   error: false,
-  sortBy: 'voteScore',
+  sortBy: 'timestamp',
   sortOrder: 'desc',
 };
 
@@ -26,7 +27,6 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: payload.error,
-        postOrder: payload.posts.map(post => post.id),
         posts: payload.posts.reduce((accumulator, current) => {
           accumulator[current.id] = current;
           return accumulator;
@@ -62,8 +62,6 @@ export default (state = INITIAL_STATE, action) => {
       if (!payload.error) {
         newState = { ...state };
         delete newState.posts[payload.postId];
-        newState.postOrder = newState
-          .postOrder.filter(item => item !== payload.postId);
       }
       return newState;
 
@@ -72,6 +70,23 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         sortBy: payload.sortBy || state.sortBy,
         sortOrder: payload.sortOrder || state.sortOrder,
+      };
+
+    case ActionTypes.POSTS_CREATE:
+      return { ...state, creating: true };
+
+    case ActionTypes.POSTS_EDIT:
+      return { ...state, editing: true };
+
+    case ActionTypes.POSTS_CREATE_FINISHED:
+    case ActionTypes.POSTS_EDIT_FINISHED:
+      return {
+        ...state,
+        error: payload.error,
+        posts: {
+          ...state.posts,
+          [payload.post.id]: payload.post,
+        },
       };
 
     default:

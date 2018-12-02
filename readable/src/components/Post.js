@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { voteOnPost, deletePost } from '../actions/postsActions';
+import { setPostFormState } from '../actions/appStateActions';
 
 import '../stylesheets/InfoCard.css';
 import arrowUpIcon from '../assets/img/up-arrow.png';
@@ -20,7 +21,12 @@ const Post = props => (
           </Panel.Title>
         </div>
         <ButtonToolbar>
-          <Button bsStyle="warning">Edit</Button>
+          <Button
+            bsStyle="warning"
+            onClick={() => props.setPostFormState(true, props.post.id)}
+          >
+            Edit
+          </Button>
           <Button
             bsStyle="danger"
             onClick={() => props.deletePost(props.post.id)}
@@ -87,6 +93,7 @@ Post.propTypes = {
   }).isRequired,
   voteOnPost: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
+  setPostFormState: PropTypes.func.isRequired,
   full: PropTypes.bool,
 };
 
@@ -97,6 +104,7 @@ Post.defaultProps = {
 const mapDispatchToProps = {
   voteOnPost,
   deletePost,
+  setPostFormState,
 };
 
 export default connect(null, mapDispatchToProps)(Post);

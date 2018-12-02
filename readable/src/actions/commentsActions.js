@@ -42,13 +42,13 @@ export const createComment = comment => async (dispatch) => {
     const { data } = response;
     dispatch(successAction(ActionTypes.COMMENTS_CREATE_FINISHED, { comment: data }));
   } catch (error) {
-    dispatch(errorAction(ActionTypes.COMMENTS_GET_FINISHED));
+    dispatch(errorAction(ActionTypes.COMMENTS_CREATE_FINISHED));
   }
 };
 
 export const updateComment = (commentId, comment) => async (dispatch) => {
   try {
-    dispatch(action(ActionTypes.COMMENTS_CREATE));
+    dispatch(action(ActionTypes.COMMENTS_EDIT));
     const response = await API.editComment(commentId, comment);
     const { data } = response;
     dispatch(successAction(ActionTypes.COMMENTS_EDIT_FINISHED, { comment: data }));

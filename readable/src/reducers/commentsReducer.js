@@ -73,9 +73,9 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.COMMENTS_EDIT_FINISHED:
       return {
         ...state,
+        error: payload.error,
         comments: {
           ...state.comments,
-          error: payload.error,
           [payload.comment.id]: payload.comment,
         },
       };
